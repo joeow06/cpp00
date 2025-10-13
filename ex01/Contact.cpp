@@ -6,7 +6,7 @@
 /*   By: jow <jow@student.42kl.edu.my>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 15:58:52 by jow               #+#    #+#             */
-/*   Updated: 2025/10/12 23:14:01 by jow              ###   ########.fr       */
+/*   Updated: 2025/10/13 21:57:46 by jow              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 void Contact::print_details()
 {
-	std::cout << "First Name: " << this->get_firstName() << std::endl;
-	std::cout << "Last Name: " << this->get_lastName() << std::endl;
-	std::cout << "Nickname: " << this->get_nickname() << std::endl;
-	std::cout << "Phone Number: " << this->get_phNum() << std::endl;
-	std::cout << "Darkest Secret: " << this->get_darkSecret() << std::endl;
+	std::cout << "\nFirst Name: " << get_firstName() << std::endl;
+	std::cout << "Last Name: " << get_lastName() << std::endl;
+	std::cout << "Nickname: " << get_nickname() << std::endl;
+	std::cout << "Phone Number: " << get_phNum() << std::endl;
+	std::cout << "Darkest Secret: " << get_darkSecret() << std::endl \
+		<< std::endl;
 }
 
 std::string Contact::get_darkSecret()

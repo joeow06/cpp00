@@ -6,7 +6,7 @@
 /*   By: jow <jow@student.42kl.edu.my>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 22:39:34 by jow               #+#    #+#             */
-/*   Updated: 2025/10/12 23:11:24 by jow              ###   ########.fr       */
+/*   Updated: 2025/10/13 22:00:37 by jow              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 
-void		searchContactList(PhoneBook &phoneBook);
+std::string truncateString(std::string string);
+void displayContact(PhoneBook &phoneBook);
+void searchContactList(PhoneBook &phoneBook);
 std::string getUserInput(std::string msg);
-void 		addNewContact(PhoneBook &phoneBook);
-void 		searchContact(PhoneBook &phoneBook);
+void addNewContact(PhoneBook &phoneBook);
+void searchContact(PhoneBook &phoneBook);
 
 int main(void)
 {
@@ -41,11 +43,11 @@ int main(void)
 				searchContact(phoneBook);
 			else if (input == "EXIT")
 			{
-				std::cout << "you entered EXIT" << std::endl;
+				std::cout << "Program exited successfully!" << std::endl;
 				return (0);
 			}
 			else
-				std::cout << "Invalid command" << std::endl;
+				std::cout << "\n!!! Invalid command !!!\n" << std::endl;
 			break;
 		}
 	}
@@ -71,25 +73,67 @@ void addNewContact(PhoneBook &phoneBook)
 
 void searchContact(PhoneBook &phoneBook)
 {
-	std::cout << "Enter which index u want" << std::endl;
+	if (phoneBook.getTotalContact() == 0)
+	{
+		std::cout << "\n!!! PhoneBook is empty !!!\n" << std::endl;
+		return ;
+	}
+	displayContact(phoneBook);
 	searchContactList(phoneBook);
 }
 
 std::string getUserInput(std::string msg)
 {
 	std::string input;
-
-	std::cout << msg << std::endl;
-	std::cin >> input;
-	return (input);
+	std::cout << msg;
+	std::getline(std::cin >> std::ws, input);
+	return input;
 }
 
-void	searchContactList(PhoneBook &phoneBook)
+void searchContactList(PhoneBook &phoneBook)
 {
 	std::string input;
-	int			num;
-	
-	std::cin >> input;
-	num = atoi(input.c_str());
-	phoneBook.get_contact(num - 1).print_details();
+	int num;
+
+	while (true)
+	{
+		std::cout << "Enter index of desired contact (or '0' to go back)" << std::endl;
+		std::cin >> input;
+		num = atoi(input.c_str());
+		if (num == 0)
+			return ;
+		else if (num < 1 || num > phoneBook.getTotalContact())
+			std::cout << "\n!!! Contact unavailable !!!\n" << std::endl;
+		else
+		{
+			phoneBook.get_contact(num - 1).print_details();
+			break;
+		}
+	}
+}
+
+void displayContact(PhoneBook &phoneBook)
+{
+	std::cout << "---------------------------------------------" << std::endl;
+	std::cout << "|     Index|First Name| Last Name|  Nickname|" << std::endl;
+	std::cout << "---------------------------------------------" << std::endl;
+	for (int i = 0; i < phoneBook.getTotalContact(); i++)
+	{
+		std::cout << "|" << std::setfill(' ') << std::setw(10) << i + 1;
+		std::cout << "|" << std::setfill(' ') << std::setw(10) << truncateString(phoneBook.get_contact(i).get_firstName());
+		std::cout << "|" << std::setfill(' ') << std::setw(10) << truncateString(phoneBook.get_contact(i).get_lastName());
+		std::cout << "|" << std::setfill(' ') << std::setw(10) << truncateString(phoneBook.get_contact(i).get_nickname()) << "|" << std::endl;
+		std::cout << "---------------------------------------------" << std::endl;
+	}
+	std::cout << std::endl;
+}
+
+std::string truncateString(std::string string)
+{
+	if (string.length() > 10)
+	{
+		string.resize(9);
+		string.append(".");
+	}
+	return (string);
 }

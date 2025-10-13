@@ -10,25 +10,22 @@
 #------------------------------------------------------------------------------#
 
 # Compiler and flags
-CC			=	c++
-AFLAGS		=	-Wall -Werror -Wextra
-CFLAGS		=	-std=c++98
-INCLUDES	=	-I$(INC_DIR)
-RM			=	rm -rf
+CXX         = c++
+CXXFLAGS    = -Wall -Wextra -Werror -std=c++98
+INCLUDES    = -I$(INC_DIR)
+RM          = rm -rf
 
 # Output file name
-NAME		=	phonebook
+NAME        = phonebook
 
 # Directories
-INC_DIR		=	./
-SRCS_DIR	=	srcs/
-OBJS_DIR	=	bin/
+INC_DIR     = ./
+SRCS_DIR    = ./
+OBJS_DIR    = bin
 
 # Source files
-SRCS_FILES	=	*.cpp
-
-# Object files
-OBJS_FILES	=	$(patsubst %.cpp, $(OBJS_DIR)%.o, $(SRCS_FILES))
+SRCS_FILES  = $(wildcard $(SRCS_DIR)*.cpp)
+OBJS_FILES  = $(patsubst $(SRCS_DIR)%.cpp, $(OBJS_DIR)/%.o, $(SRCS_FILES))
 
 #------------------------------------------------------------------------------#
 #                                 TARGETS                                      #
@@ -38,17 +35,22 @@ all: $(NAME)
 
 bonus: all
 
-# Generates output file
-$(NAME): $(SRCS_FILES)
-	$(CC) $(CFLAGS) $(SRCS_FILES) -o $(NAME)
+# Link all object files into executable
+$(NAME): $(OBJS_FILES)
+	$(CXX) $(CXXFLAGS) $(OBJS_FILES) -o $(NAME)
+	@echo "✅ Build complete!"
 
-# Removes objects
+# Compile each .cpp file into .o file in bin/
+$(OBJS_DIR)/%.o: $(SRCS_DIR)%.cpp | $(OBJS_DIR)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
+
 clean:
-	@$(RM) $(OBJS_DIR)
+	$(RM) $(OBJS_DIR)
 
-# Removes objects and executables
 fclean: clean
 	$(RM) $(NAME)
 
-# Removes objects and executables and remakes
 re: fclean all
