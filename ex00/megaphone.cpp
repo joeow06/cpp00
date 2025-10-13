@@ -6,12 +6,11 @@
 /*   By: jow <jow@student.42kl.edu.my>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 21:19:18 by joeow             #+#    #+#             */
-/*   Updated: 2025/07/21 21:22:04 by jow              ###   ########.fr       */
+/*   Updated: 2025/10/08 22:40:37 by jow              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include <cctype>
 
 int main(int ac, char **av) 
 {
