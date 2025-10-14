@@ -46,24 +46,16 @@ void Account::displayAccountsInfos(void)
 		<< std::endl;
 }
 
-// Initializer list for member object that do not have default constructor
-// Account::Account(int initial_deposit)
-// 	: _accountIndex(Account::_nbAccounts), _amount(0), _nbDeposits(0), _nbWithdrawals(0)
-// {
-// 	Account::_nbAccounts++;
-// 	Account::_totalAmount += initial_deposit;
-// 	Account::_amount += initial_deposit;
-// 	Account::_displayTimestamp();
-// 	std::cout << "index:" << _accountIndex << ";" << "amount:" << _amount
-// 			  << ";" << "created" << std::endl;
-// }
-
-Account::Account(int initial_deposit) : _accountIndex(Account::_nbAccounts), _amount(initial_deposit), _nbDeposits(0), _nbWithdrawals(0)
+//Initializer list for member object that do not have default constructor
+Account::Account(int initial_deposit)
+	: _accountIndex(Account::_nbAccounts), _amount(0), _nbDeposits(0), _nbWithdrawals(0)
 {
 	Account::_nbAccounts++;
 	Account::_totalAmount += initial_deposit;
+	Account::_amount += initial_deposit;
 	Account::_displayTimestamp();
-	std::cout << "index:" << _accountIndex << ";amount:" << checkAmount() << ";created" << std::endl;
+	std::cout << "index:" << _accountIndex << ";" << "amount:" << _amount
+			  << ";" << "created" << std::endl;
 }
 
 Account::~Account(void)
@@ -121,3 +113,8 @@ void Account::displayStatus(void) const
 	Account::_displayTimestamp();
 	std::cout << "index:" << _accountIndex << ";amount:" << checkAmount() << ";deposits:" << _nbDeposits << ";withdrawals:" << _nbWithdrawals << std::endl;
 }
+/*
+diff -u \
+  <(sed -E 's/^\[[0-9]{8}_[0-9]{6}\][[:space:]]//' 19920104_091532.log) \
+  <(sed -E 's/^\[[0-9]{8}_[0-9]{6}\][[:space:]]//' output.txt)
+*/
