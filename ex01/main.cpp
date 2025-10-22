@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include <iostream>
+#include <cstdlib>
+#include <iomanip>
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 
@@ -41,7 +43,7 @@ int main(void)
 				addNewContact(phoneBook);
 			else if (input == "SEARCH")
 				searchContact(phoneBook);
-			else if (input == "EXIT")
+			else if (input == "EXIT" || std::cin.eof())
 			{
 				std::cout << "Program exited successfully!" << std::endl;
 				return (0);
@@ -99,6 +101,8 @@ void searchContactList(PhoneBook &phoneBook)
 	{
 		std::cout << "Enter index of desired contact (or '0' to go back)" << std::endl;
 		std::cin >> input;
+		if (!isdigit(input[0]))
+			input = "-1";
 		num = atoi(input.c_str());
 		if (num == 0)
 			return ;
